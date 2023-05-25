@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Quản lý user</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"  />
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/user.css}"  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous"/>
+</head>
+<body>
+<div class="container-fluid text-center">
+  <div><h2>Quản lý user</h2></div>
+  <!-- Form -->
+  <form class="mt-4" th:action="@{/users/}">
+    <div class="input-group input-group-lg shadow-sm">
+          <span class="input-group-text border-0">
+            <i class="fas fa-search fa-xs text-secondary mb-1"></i>
+          </span>
+
+      <input type="text" class="form-control bg-white border-0 px-1" placeholder="Tìm kiếm một user..." name="keyword" id="keyword" th:value="${keyword}">
+
+      <span class="input-group-text border-0 py-1 pe-2">
+            <button type="submit" class="btn btn-primary text-uppercase-bold-sm">
+              Tìm kiếm
+            </button>
+          </span>
+    </div>
+    <br><br><br>
+  </form>
+
+  <div th:if="${message}" class="alert alert-success text-center">
+    [[${message}]]
+  </div>
+
+    <th:block th:each="user : ${listUsers}">
+    <div class="card b-1 hover-shadow mb-20">
+      <div class="media card-body">
+        <div class="media-left pr-12">
+          <img class="avatar avatar-xl no-radius" src="https://picsum.photos/200" alt="...">
+        </div>
+        <div class="media-body">
+          <div class="mb-2">
+            <span class="fs-20 pr-16">[[${user.firstName}]] [[${user.lastName}]]</span>
+          </div>
+          <small class="fs-16 fw-300 ls-1">[[${user.email}]]</small>
+        </div>
+      </div>
+
+      <footer class="card-footer flexbox align-items-center">
+        <div>
+          <strong>Thêm vào lúc:</strong>
+          <span>[[${user.datejoin}]]</span>
+        </div>
+        <div class="card-hover-show">
+          <a class="btn btn-xs fs-10 btn-bold btn-primary" data-toggle="modal" th:href="@{'/users/edit/' + ${user.id}}">Sửa</a>
+          <a class="btn btn-xs fs-10 btn-bold btn-warning" th:href="@{'/users/delete/' + ${user.id}}">Xoá</a>
+        </div>
+      </footer>
+    </div>
+      <!--End User-->
+
+    </th:block>
+
+
+  <a class="btn btn-primary text-uppercase-bold-sm center-hori" th:href="@{/users/new}">Thêm user</a>
+
+
+
+  </div>
+</div>
+</body>
+</html>
